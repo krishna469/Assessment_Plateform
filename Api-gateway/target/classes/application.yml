@@ -1,0 +1,44 @@
+server:
+  port: 9098
+
+spring:
+  application:
+    name: API-GATEWAY
+
+
+  cloud:
+    gateway:
+      routes:
+        - id: REGISTRATION-SERVICE
+          uri: lb://REGISTRATION-SERVICE
+          predicates:
+            - Path=/users/**
+            
+        - id: CATEGORY-SERVICE
+          uri: lb://CATEGORY-SERVICE
+          predicates:
+            - Path=/category/**
+            
+        - id: QUIZ-SERVICE
+          uri: lb://QUIZ-SERVICE
+          predicates:
+            - Path=/quizzes/**
+        
+        - id: QUESTION-SERVICE
+          uri: lb://QUESTION-SERVICE
+          predicates:
+             - Path=/api/questions/**
+           
+            
+        - id: REPORT-SERVICE
+          uri: lb://REPORT-SERVICE
+          predicates:
+            - Path=/api/reports/**
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8780/eureka
